@@ -24,6 +24,10 @@ Créer un **spark streaming job** qui lit ces résultats lu du **Java Socket** e
 
 ### Data Analysis
 Créer un **spark job** qui query les données parquet et affiche les résultats.
+Les queries consistent à chercher:
+- la température maximale mesurée pour chaque appareil
+- la quantité de points de données agrégés pour chaque appareil
+- la température la plus élevée, mesurée dans un jour donné, pour chaque appareil
 
 ## Commande à lancer pour faire tourner ce projet
 
@@ -57,7 +61,7 @@ sbt "run-main com.scala_tasks.sparkstreaming.WriteToParquet"
 
 6. Dirty Fix: il faut copier/coller les messages reçu par le Socket dans le Socket. C'est pour re-envoyer les données dans le Socket afin que le SparkStreaming job recoie ces données.
 
-7. Exécuter le spark job **QueryParquet.scala** qui query les données du parquet et affiche le résultat
+7. Exécuter le spark job **QueryParquet.scala** qui query les données du parquet et affiche le résultat. Ce script prend une date du jour comme argument pour afficher la température la plus élevée pour chaque appareil ce jour-là.
 ```
 sbt "run-main com.scala_tasks.sparkstreaming.QueryParquet 2021-12-03"
 ```
