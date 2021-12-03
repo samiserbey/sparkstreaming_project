@@ -32,32 +32,32 @@ Créer un `spark job` qui query les données parquet et affiche les résultats.
 docker run --name redis_container -p 6379:6379 -d redis
 ```
 
-2. Lancer 3 `IOTSimulator` qui simulent des données de température en parallèle et push ces données sur un seul Redis Queue
+2. Lancer 3 **IOTSimulator.java** sur Docker qui simulent des données de température en parallèle et push ces données sur un seul Redis Queue
 ```
 docker build -t java_tasks .
 docker run -d java_tasks:latest
 ```
 
-3. Faire ouvrir le `Socket` de la port 4999
+3. Faire ouvrir le Socket de la port 4999
 ```
 netcat -lk 4999
 ```
 
-4. Lancer `AggregateComponent` qui pop les données de Redis Queue et les écrit dans le `Socket`
+4. Lancer **AggregateComponent.java** qui pop les données de Redis Queue et les écrit dans le Socket
 ```
 mvn clean package (need to have maven installed I am also using Java8)
 java -cp target/java_tasks-1.0-SNAPSHOT-jar-with-dependencies.jar AggregateComponent &
 ```
 
-5. Lancer `WriteToParquet` qui traite les données reçu par le `Socket` en temps réel (SparkStreaming) et les sauvegarde en fichiers parquet.
+5. Lancer **WriteToParquet.scala** qui traite les données reçu par le Socket en temps réel (SparkStreaming) et les sauvegarde en fichiers parquet.
 ```
 sbt clean compile
 sbt "run-main com.scala_tasks.sparkstreaming.WriteToParquet"
 ```
 
-6. Dirty Fix: il faut copier/coller les messages reçu par le `Socket` dans le `Socket`. C'est pour re-envoyer les données dans le `Socket` afin que le SparkStreaming job recoie ces données.
+6. Dirty Fix: il faut copier/coller les messages reçu par le Socket dans le Socket. C'est pour re-envoyer les données dans le Socket afin que le SparkStreaming job recoie ces données.
 
-7. Exécuter le spark job `QueryParquet` qui query les données du parquet et affiche le résultat
+7. Exécuter le spark job **QueryParquet.scala** qui query les données du parquet et affiche le résultat
 ```
 sbt "run-main com.scala_tasks.sparkstreaming.QueryParquet 2021-12-03"
 ```
