@@ -4,7 +4,7 @@
 Ce projet consiste à faire 3 taches de Data Engineering:
 
 ### Data Ingestion
-Créer 3 `générateur de données` qui fonctionnent en parallèle et qui écrient le résultat dans un `Java Socket` d'une façon continue. Les données générées sont des donées de température capturées en temps réel et ils ont le format JSON suivant:
+Créer 3 **générateur de données** qui fonctionnent en parallèle et qui écrient le résultat dans un **Java Socket** d'une façon continue. Les données générées sont des donées de température capturées en temps réel et ils ont le format JSON suivant:
 ```
 {
 	"data": {
@@ -17,13 +17,13 @@ Créer 3 `générateur de données` qui fonctionnent en parallèle et qui écrie
 	}
 }
 ```
-Note: j'ai utilisé `Redis Queue` pour écrire les données générées et puis ces données sont lus du `Redis Queue` afin de les écrires dans un `Java Socket`.
+Note: j'ai utilisé **Redis Queue** pour écrire les données générées et puis ces données sont lus du **Redis Queue** afin de les écrires dans un **Java Socket**.
 
 ### Data Transformation
-Créer un `spark streaming job` qui lit ces résultats lu du `Java Socket` et les sauvegarde en local en format parquet.
+Créer un **spark streaming job** qui lit ces résultats lu du **Java Socket** et les sauvegarde en local en format parquet.
 
 ### Data Analysis
-Créer un `spark job` qui query les données parquet et affiche les résultats.
+Créer un **spark job** qui query les données parquet et affiche les résultats.
 
 ## Commande à lancer pour faire tourner ce projet
 
